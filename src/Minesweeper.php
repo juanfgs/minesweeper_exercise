@@ -35,6 +35,36 @@ class Minesweeper {
 
     }
 
+
+    public function displayBoard() {
+        echo " ";
+        for ($i = 0; $i < $this->cols; $i++) {
+            echo " " . ($i + 1);
+        }
+        echo "\n";
+        for ($i = 0; $i < $this->rows; $i++) {
+            echo ($i + 1) . " ";
+            for ($j = 0; $j < $this->cols; $j++) {
+                if($this->fogOfWar[$i][$j] !== null){ // display fog of war if present
+                    echo "#";
+                } else{
+                    if (in_array([$i, $j], $this->mineLocations)) {
+                        echo "*";
+                    } else {
+                        if ($this->count[$i][$j] == 0) {
+                            echo " ";
+                        } else {
+                            echo $this->count[$i][$j];
+                        }
+                    }
+            
+                }
+                echo " ";
+            }
+            echo "\n";
+        }
+    }
+
     public function reveal($x, $y) {
         $this->clearFogOfWar($x,$y);
 
@@ -50,14 +80,17 @@ class Minesweeper {
 
 
     private function checkVictoryConditions(){
-        $cleared_points = [];
-        for($i = 0; $i <= $this->rows; $i++){
-            for($j = 0; $j <= $this->cols; $j++){
-                if($this->fogOfWar[$i][$j] === null)
-                    $cleared_points[] =  [$i,$j];
+        $clearedPoints = [];
+        for($i = 0; $i <= $this->rows - 1; $i++){
+            for($j = 0; $j <= $this->cols - 1; $j++){
+                if($this->fogOfWar[$i][$j] !== null)
+                    $cleared_points[] =  "{$i},{$j}";
             }
         }
-        $remaining = array_diff($cleared_points,$this->mineLocations);
+        $mineLocations = array_map(function($value){
+            return "{$value[0]},{$value[1]}";
+        }, $this->mineLocations);
+        $remaining = array_diff($clearedPoints,$mineLocations);
         return count($remaining) === 0; 
 
     }
@@ -121,39 +154,9 @@ class Minesweeper {
     }
 
 
-    function displayBoard() {
-        echo " ";
-        for ($i = 0; $i < $this->cols; $i++) {
-            echo " " . ($i + 1);
-        }
-        echo "\n";
-        for ($i = 0; $i < $this->rows; $i++) {
-            echo ($i + 1) . " ";
-            for ($j = 0; $j < $this->cols; $j++) {
-                if($this->fogOfWar[$i][$j] !== null){ // display fog of war if present
-                    echo "#";
-                } else{
-                    if (in_array([$i, $j], $this->mineLocations)) {
-                        echo "*";
-                    } else {
-                        if ($this->count[$i][$j] == 0) {
-                            echo " ";
-                        } else {
-                            echo $this->count[$i][$j];
-                        }
-                    }
-            
-                }
-                echo " ";
-            }
-            echo "\n";
-        }
-    }
 
 }
 
-$minesweeper = new Minesweeper();
-$minesweeper->displayBoard();
 
 
     ?>
