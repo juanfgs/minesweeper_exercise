@@ -21,6 +21,8 @@ Composer and PHPUnit was added to add unit tests
 
 The code was refactored to make it object oriented and refactored to avoid repetition, global variables etc.
 
+
+
 HOW TO TEST
 ===========
 
