@@ -68,13 +68,13 @@ class Minesweeper {
     public function reveal($x, $y) {
         $this->clearFogOfWar($x,$y);
 
+        $this->displayBoard();
         if(in_array([$x,$y],$this->mineLocations))
             return 'You lost';
 
         if($this->checkVictoryConditions())
             return 'You win';
         
-        $this->displayBoard();
         return 'continue...';
     }
 
