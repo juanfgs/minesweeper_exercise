@@ -21,7 +21,7 @@ Composer and PHPUnit was added to add unit tests
 
 The code was refactored to make it object oriented and refactored to avoid repetition, global variables etc.
 
-
+Some optional parameters were added to the constructor to make it easier to test such as amount of mines placed randomly or the ability of manually placing the mines in the grid. 
 
 HOW TO TEST
 ===========
